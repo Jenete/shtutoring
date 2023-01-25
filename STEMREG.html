@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=0.7">
+    <title>STEM Register</title>
+    <style>
+        input,select{
+            font-size: 1.5rem;
+            border-radius: 20px;
+            border: 3px inset;
+            margin: 10px;
+            text-decoration: solid;
+        }
+        body{
+            background-image: linear-gradient(to bottom, rgb(58, 218, 218), rgb(239, 211, 177), rgb(234, 233, 240));
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+        button{
+            border-radius: 5px;
+            margin: 15px;
+            margin-right: 40px;
+            font-weight: bold;
+            box-shadow: -5px 5px 5px;
+            font-size: 1rem;
+
+        }
+        a{
+            margin-left: 10px;
+        }
+        .stus{
+            margin-top: 15px;
+            margin: 10px;
+            background-color: white;
+            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+        }
+        #all{
+            background-color: white;
+        }
+        #submitBtn{
+            background-color: rgb(43, 198, 48);
+        }
+        #clear{
+            background-color: rgb(236, 83, 94);
+        }
+
+        @import url("https://fonts.googleapis.com/css?family=Roboto");
+@-webkit-keyframes come-in {
+  0% {
+    -webkit-transform: translatey(100px);
+            transform: translatey(100px);
+    opacity: 0;
+  }
+  30% {
+    -webkit-transform: translateX(-50px) scale(0.4);
+            transform: translateX(-50px) scale(0.4);
+  }
+  70% {
+    -webkit-transform: translateX(0px) scale(1.2);
+            transform: translateX(0px) scale(1.2);
+  }
+  100% {
+    -webkit-transform: translatey(0px) scale(1);
+            transform: translatey(0px) scale(1);
+    opacity: 1;
+  }
+}
+@keyframes come-in {
+  0% {
+    -webkit-transform: translatey(100px);
+            transform: translatey(100px);
+    opacity: 0;
+  }
+  30% {
+    -webkit-transform: translateX(-50px) scale(0.4);
+            transform: translateX(-50px) scale(0.4);
+  }
+  70% {
+    -webkit-transform: translateX(0px) scale(1.2);
+            transform: translateX(0px) scale(1.2);
+  }
+  100% {
+    -webkit-transform: translatey(0px) scale(1);
+            transform: translatey(0px) scale(1);
+    opacity: 1;
+  }
+}
+* {
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  background: #eaedf2;
+  font-family: 'Roboto', sans-serif;
+}
+
+.floating-container {
+  position: fixed;
+  width: 100px;
+  height: 100px;
+  bottom: 0;
+  right: 0;
+  margin: 35px 25px;
+}
+.floating-container:hover {
+  height: 300px;
+}
+.floating-container:hover .floating-button {
+  box-shadow: 0 10px 25px rgba(44, 179, 240, 0.6);
+  -webkit-transform: translatey(5px);
+          transform: translatey(5px);
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
+}
+.floating-container:hover .element-container .float-element:nth-child(1) {
+  -webkit-animation: come-in 0.4s forwards 0.2s;
+          animation: come-in 0.4s forwards 0.2s;
+}
+.floating-container:hover .element-container .float-element:nth-child(2) {
+  -webkit-animation: come-in 0.4s forwards 0.4s;
+          animation: come-in 0.4s forwards 0.4s;
+}
+.floating-container:hover .element-container .float-element:nth-child(3) {
+  -webkit-animation: come-in 0.4s forwards 0.6s;
+          animation: come-in 0.4s forwards 0.6s;
+}
+.floating-container .floating-button {
+  position: absolute;
+  width: 65px;
+  height: 65px;
+  background: #2cb3f0;
+  bottom: 0;
+  border-radius: 50%;
+  left: 0;
+  right: 0;
+  margin: auto;
+  color: white;
+  line-height: 65px;
+  text-align: center;
+  font-size: 23px;
+  z-index: 100;
+  box-shadow: 0 10px 25px -5px rgba(44, 179, 240, 0.6);
+  cursor: pointer;
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
+}
+.floating-container .float-element {
+  position: relative;
+  display: block;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  margin: 15px auto;
+  color: white;
+  font-weight: 500;
+  text-align: center;
+  line-height: 50px;
+  z-index: 0;
+  opacity: 0;
+  -webkit-transform: translateY(100px);
+          transform: translateY(100px);
+}
+.floating-container .float-element .material-icons {
+  vertical-align: middle;
+  font-size: 16px;
+}
+.floating-container .float-element:nth-child(1) {
+  background: #42A5F5;
+  box-shadow: 0 20px 20px -10px rgba(66, 165, 245, 0.5);
+}
+.floating-container .float-element:nth-child(2) {
+  background: #4CAF50;
+  box-shadow: 0 20px 20px -10px rgba(76, 175, 80, 0.5);
+}
+.floating-container .float-element:nth-child(3) {
+  background: #FF9800;
+  box-shadow: 0 20px 20px -10px rgba(255, 152, 0, 0.5);
+}
+
+
+
+
+    </style>
+</head>
+<body>
+    
+    <div id="addToReg">
+        <div style="text-align: center;">
+            <h1>STEM TUTORING Register</h1><br>
+            <div><label for="name">Enter your name</label></div>
+            <div><input id="name" type="text"></div>
+            <div ><button type="submit" id="submitBtn">Submit</button><button type="reset" id="clear">Clear</button></div>
+        </div>
+        <div>
+            <a href="#" id="view">View today</a>
+            <a href="#" id="close">X</a>
+        </div>
+        <div id="all">
+    
+        </div>
+    </div>
+    <div id="receipt"style="justify-self: center;text-align: center;display: none;">
+        <h1>STEM TUTORING Receipt</h1><br>
+        <hr>
+        <div>Full name: <input type="text" onfocus="verify()"></div>
+        <div>Subject(s):
+        <select>
+            <option selected>Click here to select subject</option>
+            <option >Math and Science</option>
+            <option >Math only</option>
+            <option >Science only</option>
+            <option>Other:</option>
+            </select>
+            </div>
+        <div>Date captured: <input type="datetime-local"></div>
+        <div>Captured by: <input type="text" id="superuser" readonly></div>
+        <div>Payment (R): <input type="number" min="100" step="50" max="400"></div>
+        <div>Thank you for trusting us, contact 074 024 3108 for queries</div>
+        <button id="closereceipt">Done</button>
+    </div>
+
+    
+<div class="floating-container">
+  <div class="floating-button">+</div>
+  <div class="element-container">
+
+    <span class="float-element tooltip-left">
+      <i class="material-icons" id="viewReg">person_add
+      </i>
+    </span>
+      <span class="float-element" id="viewreceipt">
+      <i class="material-icons">receipt_long
+</i>
+    </span>
+      <span class="float-element">
+      <i class="material-icons">view_list</i>
+    </span>
+  </div>
+</div>
+    <script>
+        var students = [];
+        var total  = localStorage.getItem("numOfStu") == null? 0: parseInt(localStorage.getItem("numOfStu"));
+        //console.log(capitilize("AnsSJDJsjS"))
+        console.log(localStorage.getItem("numOfStu"))
+//localStorage.clear()
+students = getAll()
+        function add(index, name){
+            if (name.length < 5) return;
+            else if(name == "clearall"){
+                if(confirm("Create new?")){
+                    localStorage.clear();
+                    alert("Cleared!")
+                    students = [];
+                    return;
+                }
+            }
+            name = capitilize(name);
+            students.push(name);
+            localStorage.setItem(index,name);
+            localStorage.setItem("numOfStu",index);
+            
+            alert("Successo added "+name+"!")
+        }
+        function capitilize(name){
+            const Sname = name.charAt(0).toUpperCase() + name.substring(1,name.length).toLowerCase()
+            return Sname;
+        }
+        function get(index){
+            return localStorage.getItem(index);
+        }
+        function getAll(){
+            var currIndex = 1;
+            students = []
+            while(currIndex < total+1){
+                students.push(get(currIndex));
+                currIndex++;
+            }
+            return students
+        }
+        document.getElementById("submitBtn").addEventListener(
+            'click',
+            ()=>{
+                const name = document.getElementById("name").value
+                total++;
+                add(
+                    total,
+                    document.getElementById("name").value
+                
+                    )
+                document.getElementById("name").value = ""
+            }
+        )
+        document.getElementById("clear").addEventListener(
+            'click',
+            ()=>{
+                document.getElementById("name").value = ""
+            }
+        )
+        document.getElementById("view").addEventListener(
+            'click',
+            ()=>{
+                var all = document.getElementById("all");
+                all.innerHTML = ""
+                students.forEach((element)=>{
+                    all.innerHTML += ("<div class='stus'>"+element+"</div>")
+                })
+            }
+        )
+        document.getElementById("close").addEventListener(
+            'click',
+            ()=>{
+                var all = document.getElementById("all");
+                all.innerHTML = ""
+                
+            }
+        )
+        document.getElementById("viewreceipt").addEventListener('click',()=>{
+            document.getElementById("addToReg").style = "display: none"
+            document.getElementById("receipt").style = "display: block"
+        })
+        document.getElementById("closereceipt").addEventListener('click',()=>{
+            document.getElementById("receipt").style = "display: none"
+        })
+        document.getElementById("viewReg").addEventListener('click',()=>{
+            document.getElementById("addToReg").style = "display: block"
+            document.getElementById("receipt").style = "display: none"
+        })
+        var verified = false
+        function verify(){
+            if (verified) return;
+            var code = prompt('Let us verify you. Enter code:');
+            if (code == null) return
+            if (verified = code.includes("tutor s") == false) return;
+            if (verified = code.includes("tutor sa"))
+            document.getElementById("superuser").value = "A.Jenete";
+            else if (verified = code.includes("tutor ss"))
+            document.getElementById("superuser").value = "S.Manikivana";
+            else if (verified = code.includes("tutor sl"))
+            document.getElementById("superuser").value = "L.Mpondo";
+            return;
+        }
+    </script>
+</body>
+</html>
