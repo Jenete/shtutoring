@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <title>Register students</title>
+    <style>
+        html,body{
+            margin: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div id="header" style="text-align: center;">
+        <h1>STEM TUTORING LEARNERS LIST</h1>
+        <hr>
+        <br>
+    </div>
+    <div class="input-group mb-3">
+        <form class="d-flex" role="search" onsubmit="prevent()">
+            <input class="form-control me-2" type="search" class="form-control" aria-label="Search" placeholder="Search" id="searchInput">
+            <label class="input-group-text" for="searchCategory">Filter</label>
+            <select class="form-select" id="searchCategory">
+            <option selected>Full name</option>
+            <option value="ID">ID</option>
+            <option value="Cell">Cell number</option>
+            <option value="Email">Parent Tel</option>
+            <option value="payMonth">Payment month</option>
+            </select>
+            <button class="btn btn-outline-primary" type="button" id="searchButton">Search</button>
+            <button class="btn btn-outline-secondary" type="button" id="clearSearch">Clear</button>
+        </form>
+        
+      </div>
+      
+    <section>
+        <table id="clientsTable" class="table table-striped table-hover">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">ID</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Surname</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Tel</th>
+                    <th scope="col">Parent Tel</th>
+                    <th scope="col">Payments</th>
+                    <!-- <th scope="col">Actions</th> -->
+                </tr>
+            </thead>
+            <tbody id="clients">
+
+            </tbody>
+            
+            
+
+
+        </table>
+    </section>
+    <!--Loading and errors start-->
+    <div class="d-flex justify-content-center" id="testingConnection">
+      <div class="spinner-border" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+    </div>
+    <button class="btn btn-primary visually-hidden" id="showError" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasTop" aria-controls="offcanvasTop">Toggle top offcanvas</button>
+
+    <div class="offcanvas offcanvas-top" tabindex="-1" id="offcanvasTop" aria-labelledby="offcanvasTopLabel">
+      <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="offcanvasTopLabel">Oops...</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+      </div>
+      <div class="offcanvas-body">
+        Something went wrong. Check your internet connection
+      </div>
+    </div>
+    <!--Loading and errors end-->
+
+    
+    <!-- Button trigger modal -->
+<button type="button" id="viewbutton" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+    Register new member
+  </button>
+  
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel"><i class="bi bi-person-circle" style="width: fit-content;height: max-content;"></i>Client Information</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form action="">
+            <div style="text-align:justify;">
+                <div><label for="IDField" class="form-label">ID </label><input class="form-control" type="text" id="IDField" disabled></div>
+                <div><label for="nameField" class="form-label">Name </label><input class="form-control" type="text" id="nameField" disabled></div>
+                <div><label for="surnameField" class="form-label">Surname </label><input class="form-control" type="text" id="surnameField"></div>
+                <div><label for="emailField" class="form-label">Email </label><input class="form-control" type="text" id="emailField"></div>
+                <div><label for="telField" class="form-label">Tel </label><input class="form-control" type="text" id="telField"></div>
+                <div><label for="parentTel" class="form-label">Parent tel</label><input class="form-control" type="text" id="parentTel"></div>
+                <div><label for="mode" class="form-label">Mode </label><input class="form-control" type="range" min="0", max="2" value="0" id="mode"></div>
+                
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="popModal">Close</button>
+          <button type="button" class="btn btn-success" id="saveChangesbtn">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <button id="commitChanges" class="btn btn-warning"> Commit all changes</button>
+    <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseWidthExample" aria-expanded="false" aria-controls="collapseWidthExample">
+      Help
+    </button>
+  <div style="min-height: 120px;">
+    <div class="collapse collapse-horizontal" id="collapseWidthExample">
+      <div class="card card-body" style="width: 300px;">
+        We are super happy to assist! <a href="#">Click me</a> to go to help section
+      </div>
+    </div>
+    <a href="./STEMREG.html">Back to register</a>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+    
+
+    <script type="module">
+        import {firebase} from './FirebaseConfig.js';
+        var clients = [{id:"6754******47080",name: "Amahle",surname: "Jenete",email:"jenete@yahoo.com", tel:"097252523",payments: "Feb, Jan,"},{payments: "Feb, Mar, Apr",id:"854******47089",name: "Saint",surname: "Jenete",email:"jenete@yahoo.com", tel:"097252523"}];
+        const database = new firebase();
+        var  suggestions = [];
+        const modes = {Edit: 1, View: 0, Write: 2}
+        var mode = modes.View
+        try{
+            getClients()
+            clients = await database.getStudents();
+        }catch(e){
+            alert("Looks like you don't have internet connection");
+            clients = [{id:"6754******47080",name: "Amahle",surname: "Jenete",email:"jenete@yahoo.com", tel:"097252523",payments: "Feb, Jan,", parentTel: "08674638234"},{parentTel: "0746547382",payments: "Feb, Mar, Apr",id:"854******47089",name: "Saint",surname: "Jenete",email:"jenete@yahoo.com", tel:"097252523"}];
+        }
+        
+        var client = {id:"6754******47080",name: "Amahle",surname: "Jenete",email:"jenete@yahoo.com", tel:"097252523"};
+        document.getElementById("saveChangesbtn").addEventListener('click',()=>{
+            Save();
+        })
+        //console.log(localStorage.getItem("user1"));
+        document.getElementById("commitChanges").addEventListener('click',async ()=>{
+            const sure = prompt("Enter code to continue");
+            if(sure.trim() == "1234"){
+                try{
+                    const upd = await database.updateLearner(clients);
+                    if(upd) alert("Saved changes "+upd);
+                    else alert("Oops :( You don't have internet connection");
+                }catch(e){
+                    alert("Oops... You don't have internet connection");
+                }
+                
+            }
+            else{
+                alert("Error, please ask super user to accept this request!");
+            }
+        })
+        
+        document.getElementById("searchInput").addEventListener('change',(e)=>{
+            //var  suggestions = [];
+            var query = e.target.value.trim().toLowerCase();
+            performSearch(query);
+        });
+        document.getElementById("searchCategory").addEventListener('change',()=>{
+          document.getElementById("testingConnection").classList = "d-flex justify-content-center";
+          performSearch(document.getElementById("searchInput").value);
+        })
+        document.getElementById("searchButton").addEventListener('click',()=>{
+          document.getElementById("testingConnection").classList = "d-flex justify-content-center";
+          performSearch(document.getElementById("searchInput").value);
+        })
+        document.getElementById("clearSearch").addEventListener('click',()=>{
+          //document.getElementById("testingConnection").classList = "d-flex justify-content-center";
+          document.getElementById("searchInput").value = "";
+          setUpViewer(clients);
+        })
+        document.getElementById("mode").addEventListener('input',(e)=>{
+          //alert(e.target.value)
+          mode = e.target.value;
+          console.log(mode)
+          if (mode == modes.Edit){
+            document.getElementById("mode").style = "background-color: orange";
+            document.getElementById("IDField").disabled = true;
+            document.getElementById("nameField").disabled = true;
+          }
+          else if (mode == modes.Write){
+            document.getElementById("mode").style = "background-color: red";
+            document.getElementById("IDField").disabled = false;
+            document.getElementById("nameField").disabled = false;
+          }
+          else if (mode == modes.View){
+            document.getElementById("mode").style = "background-color: green";
+            document.getElementById("IDField").disabled = true;
+            document.getElementById("nameField").disabled = true;
+          }
+        })
+        
+        function popModal(){
+          document.getElementById("popModal").click();
+        }
+        function prevent(e){
+            e.preventDefault();
+        }
+        function performSearch(query){
+          var searchBy = document.getElementById("searchCategory").options[document.getElementById("searchCategory").selectedIndex].value;
+            console.log(searchBy)
+            if (searchBy == "Full name"){suggestions = clients.filter((element)=> element.name.trim().toLowerCase().includes(query) || element.surname.trim().toLowerCase().includes(query));
+            //console.log(suggestions);
+            }
+            else if (searchBy == "ID"){suggestions = clients.filter((element)=> element.id.toString().includes(query));
+            //console.log(suggestions);
+            }
+            else if (searchBy == "Email"){suggestions = clients.filter((element)=> element.parentTel.trim().toLowerCase().includes(query));
+            //console.log(suggestions);
+            }
+            else if (searchBy == "Cell"){suggestions = clients.filter((element)=> element.tel.trim().toLowerCase().includes(query));
+            //console.log(suggestions);
+            }
+            else if (searchBy == "payMonth"){suggestions = clients.filter((element)=> element.payments.trim().toLowerCase().includes(query));
+            //console.log(suggestions);
+            }
+    
+            if(suggestions.length > 0)
+            setUpViewer(suggestions);
+        }
+        var ErrorTimer = 0;
+       setInterval(async ()=>{
+          if (ErrorTimer == 1) return;
+          document.getElementById("testingConnection").classList = clients.length > 3 ? "d-flex justify-content-center visually-hidden":"d-flex justify-content-center";
+          try{
+            //await database.updateData(clients);
+            clients = await database.getStudents();
+            setUpViewer(clients);
+        }catch(e){
+          //document.getElementById("testingConnectionError").classList = await database.checkConnection()? "d-flex justify-content-center visually-hidden":"d-flex justify-content-center";
+          document.getElementById("showError").click(); 
+          ErrorTimer = 1;
+          // alert("Looks like you don't have internet connection");
+            //clients = [{id:"6754******47080 ",name: "Amahle",surname: "Jenete",email:"jenete@yahoo.com", tel:"097252523"},{id:"854******47089",name: "Saint",surname: "Jenete",email:"jenete@yahoo.com", tel:"097252523"}];
+        }
+          }, 5000) 
+        function populate(){
+            document.getElementById("nameField").value = client.name;
+            document.getElementById("IDField").value = client.id;
+            document.getElementById("emailField").value = client.email;
+            document.getElementById("surnameField").value = client.surname;
+            document.getElementById("telField").value= client.tel;
+            document.getElementById("parentTel").value= client.parentTel;
+        }
+        function populateBack(){
+            if (mode == modes.Write) {client.id = document.getElementById("IDField").value;
+            client.name = document.getElementById("nameField").value;}
+            client.email =  document.getElementById("emailField").value;
+            client.surname = document.getElementById("surnameField").value;
+            client.tel = document.getElementById("telField").value;
+            client.parentTel = document.getElementById("parentTel").value;
+            mode = modes.View;
+        }
+        async function  Save() {
+            const saveDetails = await confirm("Save changes permanently?");
+            console.log(saveDetails);
+            if(saveDetails == false) return;
+            if (mode == modes.Edit){const index = clients.indexOf(client);
+            populateBack();
+            clients[index] = client;}
+            populateBack();
+            //console.log(client);
+            if (mode == modes.Write){
+              const index = clients.indexOf(client);
+              if (index == -1) clients.push(client);
+              await database.updateLearner(client);
+            }
+            await database.updateData(clients);
+            console.log("About to set up view");
+            popModal();
+            setUpViewer(clients);
+        }
+        function setUpViewer(custom){
+            const viewer = document.getElementById("clients");
+            viewer.innerHTML = "";
+            var data = document.createElement("tr");
+            var spacer;
+            var counter = 1;
+            custom.forEach((element) =>{
+                data = document.createElement("tr");
+                data.addEventListener('click', ()=>{
+                    client = element;
+                    populate();
+                    //console.log(client);
+                    mode = modes.Edit;
+                    document.getElementById("viewbutton").click();
+                })
+                //data.classList = ("list-group-item list-group-item-info").split(" ");
+                spacer = document.createElement("td");
+                spacer.innerHTML = counter;
+                data.appendChild(spacer);
+    
+                spacer = document.createElement("td");
+                spacer.innerHTML = element.id;
+                data.appendChild(spacer);
+                
+                spacer = document.createElement("td");
+                spacer.innerHTML = element.name;
+                data.appendChild(spacer);
+    
+                spacer= document.createElement("td");
+                spacer.innerHTML = element.surname;
+                data.appendChild(spacer);
+    
+                spacer= document.createElement("td");
+                spacer.innerHTML = element.email;
+                data.appendChild(spacer);
+    
+                spacer= document.createElement("td");
+                spacer.innerHTML = element.tel;
+                data.appendChild(spacer);
+                
+                spacer= document.createElement("td");
+                spacer.innerHTML = element.parentTel;
+                data.appendChild(spacer);
+
+                spacer= document.createElement("td");
+                spacer.innerHTML = element.payments;
+                data.appendChild(spacer);
+    
+                //data.appendChild( document.getElementById("viewbutton")).click();
+            
+    
+                counter++;
+                
+                //data.appendChild(spacer);
+                viewer.appendChild(data);
+                //viewer.appendChild(document.createElement("br"));
+            })
+            //alert("Added all clients");
+        
+        }
+        setUpViewer(clients);
+        
+        </script>
+</body>
+</html>
