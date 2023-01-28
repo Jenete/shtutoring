@@ -189,6 +189,9 @@
           //alert(e.target.value)
           mode = e.target.value;
           //console.log(mode)
+          setMode()
+        })
+        function setMode(){
           if (mode == modes.Edit){
             document.getElementById("mode").style = "background-color: orange";
             document.getElementById("IDField").disabled = true;
@@ -204,8 +207,7 @@
             document.getElementById("IDField").disabled = true;
             document.getElementById("nameField").disabled = true;
           }
-        })
-        
+        }
         function popModal(){
           document.getElementById("popModal").click();
         }
@@ -214,6 +216,7 @@
         }
         function resetClient(){
             client = {id:"",name: "",surname: "",email:"", tel:"",payments: "", parentTel: ""};
+            setMode();
         }
         function performSearch(query){
           var searchBy = document.getElementById("searchCategory").options[document.getElementById("searchCategory").selectedIndex].value;
@@ -254,7 +257,7 @@
         }
           }, 5000) 
         function populate(){
-            
+            setMode();
             document.getElementById("nameField").value = client.name;
             document.getElementById("IDField").value = client.id;
             document.getElementById("emailField").value = client.email;
@@ -270,9 +273,12 @@
             client.tel = document.getElementById("telField").value;
             client.parentTel = document.getElementById("parentTel").value;
             var newMonth = ", "+document.getElementById("paymentAdd").value;
-            if (!newMonth == ", NaN"){
-            client.payments += +", "+document.getElementById("paymentAdd").value;
-            client.payments = client.payments.replace("NaN2023-",",")}
+            console.log(newMonth + "expression "+(newMonth.trim().length > 3));
+            if (newMonth.trim().length > 3){
+            client.payments += newMonth;
+            client.payments = client.payments.replace("NaN2023-",",")
+            client.payments = client.payments.replace("2023-","")
+          }
             //mode = modes.View;
         }
         async function  Save() {
