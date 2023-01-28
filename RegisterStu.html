@@ -101,6 +101,9 @@
                 <div><label for="emailField" class="form-label">Email </label><input class="form-control" type="text" id="emailField"></div>
                 <div><label for="telField" class="form-label">Tel </label><input class="form-control" type="text" id="telField"></div>
                 <div><label for="parentTel" class="form-label">Parent tel</label><input class="form-control" type="text" id="parentTel"></div>
+                <hr>
+                <div><label for="paymentAdd" class="form-label">Add payment</label><input class="form-control" type="month" id="paymentAdd"></div>
+                <hr>
                 <div><label for="mode" class="form-label">Mode </label><input class="form-control" type="range" min="0", max="2" value="0" id="mode"></div>
                 
             </div>
@@ -135,14 +138,14 @@
         const modes = {Edit: 1, View: 0, Write: 2}
         var mode = modes.View
         try{
-            getClients()
             clients = await database.getStudents();
         }catch(e){
             alert("Looks like you don't have internet connection");
             clients = [{id:"6754******47080",name: "Amahle",surname: "Jenete",email:"jenete@yahoo.com", tel:"097252523",payments: "Feb, Jan,", parentTel: "08674638234"},{parentTel: "0746547382",payments: "Feb, Mar, Apr",id:"854******47089",name: "Saint",surname: "Jenete",email:"jenete@yahoo.com", tel:"097252523"}];
         }
         
-        var client = {id:"6754******47080",name: "Amahle",surname: "Jenete",email:"jenete@yahoo.com", tel:"097252523"};
+        var client = {id:"",name: "",surname: "",email:"", tel:"",payments: "", parentTel: ""};
+        
         document.getElementById("saveChangesbtn").addEventListener('click',()=>{
             Save();
         })
@@ -185,7 +188,7 @@
         document.getElementById("mode").addEventListener('input',(e)=>{
           //alert(e.target.value)
           mode = e.target.value;
-          console.log(mode)
+          //console.log(mode)
           if (mode == modes.Edit){
             document.getElementById("mode").style = "background-color: orange";
             document.getElementById("IDField").disabled = true;
@@ -209,9 +212,12 @@
         function prevent(e){
             e.preventDefault();
         }
+        function resetClient(){
+            client = {id:"",name: "",surname: "",email:"", tel:"",payments: "", parentTel: ""};
+        }
         function performSearch(query){
           var searchBy = document.getElementById("searchCategory").options[document.getElementById("searchCategory").selectedIndex].value;
-            console.log(searchBy)
+            //console.log(searchBy)
             if (searchBy == "Full name"){suggestions = clients.filter((element)=> element.name.trim().toLowerCase().includes(query) || element.surname.trim().toLowerCase().includes(query));
             //console.log(suggestions);
             }
@@ -248,6 +254,7 @@
         }
           }, 5000) 
         function populate(){
+            
             document.getElementById("nameField").value = client.name;
             document.getElementById("IDField").value = client.id;
             document.getElementById("emailField").value = client.email;
@@ -256,13 +263,17 @@
             document.getElementById("parentTel").value= client.parentTel;
         }
         function populateBack(){
-            if (mode == modes.Write) {client.id = document.getElementById("IDField").value;
-            client.name = document.getElementById("nameField").value;}
+            client.id = document.getElementById("IDField").value;
+            client.name = document.getElementById("nameField").value;
             client.email =  document.getElementById("emailField").value;
             client.surname = document.getElementById("surnameField").value;
             client.tel = document.getElementById("telField").value;
             client.parentTel = document.getElementById("parentTel").value;
-            mode = modes.View;
+            var newMonth = ", "+document.getElementById("paymentAdd").value;
+            if (!newMonth == ", NaN"){
+            client.payments += +", "+document.getElementById("paymentAdd").value;
+            client.payments = client.payments.replace("NaN2023-",",")}
+            //mode = modes.View;
         }
         async function  Save() {
             const saveDetails = await confirm("Save changes permanently?");
@@ -271,9 +282,10 @@
             if (mode == modes.Edit){const index = clients.indexOf(client);
             populateBack();
             clients[index] = client;}
-            populateBack();
+            
             //console.log(client);
             if (mode == modes.Write){
+              populateBack();
               const index = clients.indexOf(client);
               if (index == -1) clients.push(client);
               await database.updateLearner(client);
@@ -281,6 +293,7 @@
             await database.updateData(clients);
             console.log("About to set up view");
             popModal();
+            resetClient();
             setUpViewer(clients);
         }
         function setUpViewer(custom){

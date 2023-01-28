@@ -28,9 +28,9 @@ async function getAllFromTable(table) {
   return users;
 } 
 async function AddToTable(data, table) {
-  const citiesCol = collection(db, table);
+  const citiesCol = doc(db, table, data.id);
   var status = false;
-  await addDoc(citiesCol,data).then(()=>{
+  await setDoc(citiesCol,data).then(()=>{
     status = true;
     return true;
   }).catch((err)=>{

@@ -221,7 +221,7 @@ html, body {
         <div>Captured by: <input type="text" id="superuser" readonly></div>
         <div>Payment (R): <input type="number" min="100" step="50" max="400"></div>
         <div>Thank you for trusting us, contact 074 024 3108 for queries</div>
-        <button id="closereceipt">Done</button>
+        <button id="closereceipt">Done</button> <button id="submitreceipt">Submit</button>
     </div>
 
     
@@ -335,6 +335,9 @@ students = getAll()
         document.getElementById("viewReg").addEventListener('click',()=>{
             document.getElementById("addToReg").style = "display: block"
             document.getElementById("receipt").style = "display: none"
+        })
+        document.getElementById("submitreceipt").addEventListener('click',()=>{
+            alert("To be implemented");
         })
         var verified = false
         function verify(){
