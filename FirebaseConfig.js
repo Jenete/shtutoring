@@ -127,7 +127,7 @@ export class firebase{
     }
     async checkConnection(){
       try{
-        const online = await fetch("./ClientViewer.html")
+        const online = await fetch("./index.html")
         return online.status > 200 && online.status < 300;
       }
       catch(e){
