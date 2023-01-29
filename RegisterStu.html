@@ -116,7 +116,7 @@
       </div>
     </div>
   </div>
-  <button id="commitChanges" class="btn btn-warning"> Commit all changes</button>
+  <button id="commitChanges" class="btn btn-warning"> Upload file</button>
     <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseWidthExample" aria-expanded="false" aria-controls="collapseWidthExample">
       Help
     </button>
@@ -151,20 +151,7 @@
         })
         //console.log(localStorage.getItem("user1"));
         document.getElementById("commitChanges").addEventListener('click',async ()=>{
-            const sure = prompt("Enter code to continue");
-            if(sure.trim() == "1234"){
-                try{
-                    const upd = await database.updateLearner(clients);
-                    if(upd) alert("Saved changes "+upd);
-                    else alert("Oops :( You don't have internet connection");
-                }catch(e){
-                    alert("Oops... You don't have internet connection");
-                }
-                
-            }
-            else{
-                alert("Error, please ask super user to accept this request!");
-            }
+            window.open("./UploadDoc")
         })
         
         document.getElementById("searchInput").addEventListener('change',(e)=>{
