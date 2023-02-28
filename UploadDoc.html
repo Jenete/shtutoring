@@ -68,6 +68,12 @@
         
       </div>
       <hr>
+      <div>
+        <select name="saveas" id="savaPath">
+            <option value="1" selected>Files</option>
+            <option value="2" >Videos</option>
+        </select>
+      </div>
       <div style="margin: 2px;">
         <input type="file" id="files"> <span><button id="submitit">Submit</button></span>
         <div>
@@ -87,8 +93,14 @@
                     console.log(file);
              })
              document.getElementById("submitit").addEventListener('click',(e)=>{
+                
                     if (file != null) {
-                        uploadDocument(file);
+                        const saveAs = document.getElementById("savaPath").value
+                        //alert(saveAs);
+                        if(saveAs == '1'){
+                            uploadDocument(file,'files');
+                        }
+                        else uploadDocument(file,'videos');
                         var interval  =  setInterval(()=>{
                             document.getElementById("progress").value = progress;
                             setResponse("Progress "+parseInt(progress)+"%");

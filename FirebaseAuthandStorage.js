@@ -28,9 +28,9 @@ const storage = getStorage(app);
 // })
 export var progress = 0;
 export var downloadLink = "";
-export function uploadDocument(file){
+export function uploadDocument(file,path){
       // Upload file and metadata to the object 'images/mountains.jpg'
-const storageRef = ref(storage, 'files/' + file.name);
+const storageRef = ref(storage, path+'/' + file.name);
 const uploadTask = uploadBytesResumable(storageRef, file);
 
 // Listen for state changes, errors, and completion of the upload.
